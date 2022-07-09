@@ -539,7 +539,7 @@ class Message(Hashable):
                  '_cs_clean_content', '_cs_raw_channel_mentions', 'nonce', 'pinned',
                  'role_mentions', '_cs_raw_role_mentions', 'type', 'call', 'flags',
                  '_cs_system_content', '_cs_guild', '_state', 'reactions', 'reference',
-                 'application', 'activity', 'stickers')
+                 'application', 'activity', 'stickers', 'components')
 
     def __init__(self, *, state, channel, data):
         self._state = state
@@ -561,6 +561,7 @@ class Message(Hashable):
         self.content = data['content']
         self.nonce = data.get('nonce')
         self.stickers = [Sticker(data=data, state=state) for data in data.get('stickers', [])]
+        self.components = data.get('components')
 
         try:
             ref = data['message_reference']
@@ -704,6 +705,9 @@ class Message(Hashable):
 
     def _handle_nonce(self, value):
         self.nonce = value
+
+    def _handle_components(self, value):
+        self.components = value
 
     def _handle_author(self, author):
         self.author = self._state.store_user(author)
