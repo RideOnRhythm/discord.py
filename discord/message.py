@@ -542,7 +542,6 @@ class Message(Hashable):
                  'application', 'activity', 'stickers', 'components')
 
     def __init__(self, *, state, channel, data):
-        dh joe mama
         self._state = state
         self.id = int(data['id'])
         self.webhook_id = utils._get_as_snowflake(data, 'webhook_id')
